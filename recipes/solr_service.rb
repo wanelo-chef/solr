@@ -61,6 +61,7 @@ smf node[:solr][:service_name] do
   start_timeout 300
   stop_timeout 60
   environment "PATH" => node[:solr][:smf_path]
+  not_if "svcs #{node[:solr][:service_name]}"
 end
 
 # start solr service

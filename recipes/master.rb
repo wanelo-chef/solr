@@ -27,7 +27,7 @@ auto_commit_enabled = node[:solr][:auto_commit][:max_docs] && node[:solr][:auto_
 # configure solr
 execute "copy example solr home into master" do
   command "rsync -a /opt/solr/home_example/ #{node[:solr][:master][:home]}/ && chown -R solr:root #{node[:solr][:master][:home]}/"
-  not_if "ls #{node[:solr][:master][:home]}/"
+  not_if "svcs #{node[:solr][:service_name]}"
 end
 
 template "#{node[:solr][:master][:home]}/log.conf" do

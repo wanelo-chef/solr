@@ -26,7 +26,7 @@ node.set[:solr][:service_name] = 'solr-replica'
 # configure solr
 execute "copy example solr home into master" do
   command "rsync -a /opt/solr/home_example/ #{node[:solr][:replica][:home]}/ && chown -R #{node[:solr][:solr_user]}:root #{node[:solr][:replica][:home]}/"
-  not_if "ls #{node[:solr][:replica][:home]}/"
+  not_if "svcs #{node[:solr][:service_name]}"
 end
 
 template "#{node[:solr][:replica][:home]}/log.conf" do
