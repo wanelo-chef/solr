@@ -16,12 +16,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+node.set[:solr][:service_name] = 'solr-replica'
 
 include_recipe "solr::user"
 include_recipe "solr::install"
 include_recipe "solr::install_newrelic"
-
-node.set[:solr][:service_name] = 'solr-replica'
 
 # configure solr
 execute "copy example solr home into master" do

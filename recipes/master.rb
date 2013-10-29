@@ -16,11 +16,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+node.set[:solr][:service_name] = 'solr-master'
+
 include_recipe "solr::user"
 include_recipe "solr::install"
 include_recipe "solr::install_newrelic"
-
-node.set[:solr][:service_name] = 'solr-master'
 
 auto_commit_enabled = node[:solr][:auto_commit][:max_docs] && node[:solr][:auto_commit][:max_time]
 
