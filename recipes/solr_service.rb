@@ -60,7 +60,9 @@ smf node[:solr][:service_name] do
   start_command cmd.join(' ')
   start_timeout 300
   stop_timeout 60
-  environment "PATH" => node[:solr][:smf_path]
+  environment "PATH" => node[:solr][:smf_path],
+              "LC_ALL" => "en_US.UTF-8",
+              "LANG" => "en_US.UTF-8"
 end
 
 # start solr service
