@@ -51,3 +51,14 @@ default[:solr][:jvm_flags] = ""
 default[:solr][:version] = "3.6.2"
 default[:solr][:source_url] = "http://www.us.apache.org/dist/lucene/solr/#{node[:solr][:version]}/apache-solr-#{node[:solr][:version]}.tgz"
 
+default[:solr][:config][:filter_cache][:class] = "solr.FastLRUCache"
+default[:solr][:config][:filter_cache][:size] = "512"
+default[:solr][:config][:filter_cache][:initial_size] = "512"
+
+default[:solr][:config][:query_result_cache][:class] = "solr.LRUCache"
+default[:solr][:config][:query_result_cache][:size] = "512"
+default[:solr][:config][:query_result_cache][:initial_size] = "512"
+
+default[:solr][:config][:document_cache][:class] = "solr.LRUCache"
+default[:solr][:config][:document_cache][:size] = "512"
+default[:solr][:config][:document_cache][:initial_size] = "512"

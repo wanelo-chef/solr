@@ -40,7 +40,19 @@ template "#{node[:solr][:replica][:home]}/solr/conf/solrconfig.xml" do
   mode "0600"
   variables({
     :role => "replica",
-    :config => node[:solr]
+    :config => node[:solr],
+
+    :filter_cache_class => node[:solr][:config][:filter_cache][:class],
+    :filter_cache_size => node[:solr][:config][:filter_cache][:size],
+    :filter_cache_initial_size => node[:solr][:config][:filter_cache][:initial_size],
+
+    :query_result_cache_class => node[:solr][:config][:query_result_cache][:class],
+    :query_result_cache_size => node[:solr][:config][:query_result_cache][:size],
+    :query_result_cache_initial_size => node[:solr][:config][:query_result_cache][:initial_size],
+
+    :document_cache_class => node[:solr][:config][:document_cache][:class],
+    :document_cache_size => node[:solr][:config][:document_cache][:size],
+    :document_cache_initial_size => node[:solr][:config][:document_cache][:initial_size]
   })
 end
 
