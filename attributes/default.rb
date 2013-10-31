@@ -9,18 +9,8 @@ default[:solr][:solr_log_count] = 4
 default[:solr][:smf_path] = '/opt/local/bin:/opt/local/sbin:/usr/bin:/usr/sbin'
 default[:solr][:uses_sunspot_schema] = true
 
-default[:solr][:auto_commit] = {
-  :max_docs => nil,
-  :max_time => nil
-}
-
 default[:solr][:only_bind_private_ip] = false
 default[:solr][:bind_localhost] = false
-
-default[:solr][:text_filters] = [
-    # { "class" = > "solr.PorterStemFilterFactory" }
-    # { "class" = > "solr.DictionaryCompoundWordTokenFilterFactory", "dictionary" = > "filename.txt", "minWordSize" = > 5 }
-]
 
 default[:solr][:users] = []
 default[:solr][:master][:hostname] = 'localhost'
@@ -42,7 +32,6 @@ default[:solr][:newrelic][:jar] = "/opt/solr/newrelic/newrelic.jar"
 default[:solr][:newrelic][:jar_checksum] = nil     # calculate with `openssl dgst -sha256 $filename`
 default[:solr][:newrelic][:remote_jar_file] = ""
 
-default[:solr][:memory] = {}
 default[:solr][:memory][:xmx] = ""
 default[:solr][:memory][:xms] = ""
 
@@ -51,14 +40,24 @@ default[:solr][:jvm_flags] = ""
 default[:solr][:version] = "3.6.2"
 default[:solr][:source_url] = "http://www.us.apache.org/dist/lucene/solr/#{node[:solr][:version]}/apache-solr-#{node[:solr][:version]}.tgz"
 
+
+default[:solr][:config][:auto_commit][:max_docs] = nil
+default[:solr][:config][:auto_commit][:max_time] = nil
+
+default[:solr][:config][:query_result_window_size] = 20
+default[:solr][:config][:query_result_max_docs_cached] = 200
+
 default[:solr][:config][:filter_cache][:class] = "solr.FastLRUCache"
 default[:solr][:config][:filter_cache][:size] = "512"
 default[:solr][:config][:filter_cache][:initial_size] = "512"
+default[:solr][:config][:filter_cache][:auto_warm_count] = "0"
 
 default[:solr][:config][:query_result_cache][:class] = "solr.LRUCache"
 default[:solr][:config][:query_result_cache][:size] = "512"
 default[:solr][:config][:query_result_cache][:initial_size] = "512"
+default[:solr][:config][:query_result_cache][:auto_warm_count] = "0"
 
 default[:solr][:config][:document_cache][:class] = "solr.LRUCache"
 default[:solr][:config][:document_cache][:size] = "512"
 default[:solr][:config][:document_cache][:initial_size] = "512"
+default[:solr][:config][:document_cache][:auto_warm_count] = "0"
