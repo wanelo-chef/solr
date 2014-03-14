@@ -23,7 +23,8 @@ include_recipe "smf::default"
 smf node[:solr][:service_name] do
   credentials_user node[:solr][:solr_user]
   cmd = []
-  cmd << "nohup java"
+  cmd << "nohup"
+  cmd << node[:solr][:java_executable]
 
   cmd << node[:solr][:jvm_flags]
 

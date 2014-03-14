@@ -1,5 +1,6 @@
 default[:solr][:java_dir] = '/usr/java/default'
 default[:solr][:java_options] = '-Dsolr.solr.home=/opt/solr/solr $JAVA_OPTIONS'
+default[:solr][:java_executable] = 'java'
 default[:solr][:solr_home] = '/opt/solr'
 default[:solr][:solr_user] = 'solr'
 default[:solr][:solr_log_dir] = '/var/log/solr'
