@@ -46,6 +46,7 @@ template "#{node[:solr][:master][:home]}/solr/conf/solrconfig.xml" do
     :master => node[:solr][:master],
     :auto_commit => auto_commit_enabled
   })
+  only_if { node[:solr][:uses_default_config] || !::File.exists?("#{node[:solr][:replica][:home]}/solr/conf/solrconfig.xml") }
 end
 
 # create/import smf manifest

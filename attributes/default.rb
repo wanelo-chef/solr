@@ -9,6 +9,7 @@ default[:solr][:solr_log_count] = 4
 
 default[:solr][:smf_path] = '/opt/local/bin:/opt/local/sbin:/usr/bin:/usr/sbin'
 default[:solr][:uses_sunspot_schema] = true
+default[:solr][:uses_default_config] = true
 
 default[:solr][:only_bind_private_ip] = false
 default[:solr][:bind_localhost] = false
