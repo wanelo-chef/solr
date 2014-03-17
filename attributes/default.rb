@@ -59,6 +59,7 @@ default[:solr][:config][:query_result_cache][:size] = "512"
 default[:solr][:config][:query_result_cache][:initial_size] = "512"
 default[:solr][:config][:query_result_cache][:auto_warm_count] = "0"
 
+default[:solr][:config][:document_cache][:enabled] = true
 default[:solr][:config][:document_cache][:class] = "solr.LRUCache"
 default[:solr][:config][:document_cache][:size] = "512"
 default[:solr][:config][:document_cache][:initial_size] = "512"

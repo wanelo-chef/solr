@@ -349,13 +349,15 @@
       initialSize="<%= @config[:query_result_cache][:initial_size] %>"
       autowarmCount="<%= @config[:query_result_cache][:auto_warm_count] %>"/>
 
-  <!-- documentCache caches Lucene Document objects (the stored fields for each document).
-       Since Lucene internal document ids are transient, this cache will not be autowarmed.  -->
-    <documentCache
-      class="<%= @config[:document_cache][:class] %>"
-      size="<%= @config[:document_cache][:size] %>"
-      initialSize="<%= @config[:document_cache][:initial_size] %>"
-      autowarmCount="<%= @config[:document_cache][:auto_warm_count] %>"/>
+    <% if @config[:document_cache][:enabled] %>
+      <!-- documentCache caches Lucene Document objects (the stored fields for each document).
+           Since Lucene internal document ids are transient, this cache will not be autowarmed.  -->
+      <documentCache
+        class="<%= @config[:document_cache][:class] %>"
+        size="<%= @config[:document_cache][:size] %>"
+        initialSize="<%= @config[:document_cache][:initial_size] %>"
+        autowarmCount="<%= @config[:document_cache][:auto_warm_count] %>"/>
+    <% end %>
 
     <!-- If true, stored fields that are not requested will be loaded lazily.
       This can result in a significant speed improvement if the usual case is to
