@@ -1,2 +1,0 @@
-solr 'solr' do
-end

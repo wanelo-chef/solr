@@ -1,0 +1,2 @@
+solr 'master' do
+end
