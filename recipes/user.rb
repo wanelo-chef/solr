@@ -18,6 +18,6 @@
 
 user node[:solr][:solr_user] do
   home node[:solr][:solr_home]
-  shell "/bin/bash"
-  supports :manage_home => false
+  shell '/bin/bash'
+  supports manage_home: false
 end

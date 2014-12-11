@@ -16,14 +16,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include_recipe "ipaddr_extensions::default"
-include_recipe "smf::default"
+include_recipe 'ipaddr_extensions::default'
+include_recipe 'smf::default'
 
 # create/import smf manifest
 smf node[:solr][:service_name] do
   credentials_user node[:solr][:solr_user]
   cmd = []
-  cmd << "nohup"
+  cmd << 'nohup'
   cmd << node[:solr][:java_executable]
 
   cmd << node[:solr][:jvm_flags]
@@ -31,7 +31,7 @@ smf node[:solr][:service_name] do
   cmd << "-Xms#{node[:solr][:memory][:xms]}" unless node[:solr][:memory][:xms].empty?
   cmd << "-Xmx#{node[:solr][:memory][:xmx]}" unless node[:solr][:memory][:xmx].empty?
 
-  if node[:solr][:service_name] == "solr-replica"
+  if node[:solr][:service_name] == 'solr-replica'
     solr_master = search('node', node[:solr][:replica][:solr_master]).first[node[:solr][:replica][:master_ip_attribute]]
     cmd << "-Dreplication.url=http://#{solr_master}:#{node[:solr][:master][:port]}/solr/replication"
     cmd << "-Djetty.port=#{node[:solr][:replica][:port]}"
@@ -48,7 +48,7 @@ smf node[:solr][:service_name] do
   if node[:solr][:only_bind_private_ip]
     cmd << "-Djetty.host=#{node[:privateaddress]}"
   elsif node[:solr][:bind_localhost]
-    cmd << "-Djetty.host=127.0.0.1"
+    cmd << '-Djetty.host=127.0.0.1'
   end
 
   # Add NewRelic to start command if an API key is present
@@ -57,13 +57,13 @@ smf node[:solr][:service_name] do
     cmd << "-Dnewrelic.environment=#{node[:solr][:newrelic][:environment]}"
   end
 
-  cmd << "-jar start.jar &"
+  cmd << '-jar start.jar &'
   start_command cmd.join(' ')
   start_timeout 300
   stop_timeout 60
-  environment "PATH" => node[:solr][:smf_path],
-              "LC_ALL" => "en_US.UTF-8",
-              "LANG" => "en_US.UTF-8"
+  environment 'PATH' => node[:solr][:smf_path],
+              'LC_ALL' => 'en_US.UTF-8',
+              'LANG' => 'en_US.UTF-8'
 end
 
 # start solr service

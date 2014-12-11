@@ -16,29 +16,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include_recipe "java::default"
-include_recipe "solr::user"
+include_recipe 'java::default'
+include_recipe 'solr::user'
 
 # download and extract solr
 
 solr_tarball = "#{Chef::Config[:file_cache_path]}/solr.tgz"
 
 remote_file solr_tarball do
-	source node[:solr][:source_url]
-	mode "0744"
-	not_if "ls #{solr_tarball}"
+  source node[:solr][:source_url]
+  mode '0744'
+  not_if "ls #{solr_tarball}"
 end
 
-execute "extract solr archive" do
+execute 'extract solr archive' do
   command "mkdir -p /var/tmp/solr && tar -C /var/tmp/solr -xzf #{solr_tarball} --strip 1"
-  not_if "ls -d /var/tmp/solr"
+  not_if 'ls -d /var/tmp/solr'
 end
 
 directory node[:solr][:solr_home] do
   owner node[:solr][:solr_user]
 end
 
-execute "copy example solr home into master" do
+execute 'copy example solr home into master' do
   command "mkdir -p #{node[:solr][:solr_home]}/home_example/ && cp -pr /var/tmp/solr/example/* #{node[:solr][:solr_home]}/home_example/"
   not_if "svcs #{node[:solr][:service_name]}"
 end

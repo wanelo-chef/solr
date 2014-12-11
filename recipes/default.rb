@@ -17,4 +17,4 @@
 # limitations under the License.
 #
 
-include_recipe "solr::master"
+include_recipe 'solr::master'
