@@ -58,7 +58,7 @@ module Solr
 
     def replica_flags
       return nil unless replica?
-      cmd << "-Dreplication.url=http://#{solr_master}:#{master_config['port']}/solr/replication"
+      cmd << "-Dreplication.url=http://#{solr_master_ip}:#{master_config['port']}/solr/replication"
       cmd << "-Djetty.port=#{replica_config['port']}"
       cmd << "-Djava.util.logging.config.file=#{replica_config['home']}/log.conf"
       cmd << "-Dsolr.data.dir=#{replica_config['home']}/solr/data"
@@ -76,9 +76,10 @@ module Solr
       node['solr']
     end
 
-    def solr_master
-      search('node', config['replica']['solr_master'])
-        .first[config['replica']['master_ip_attribute']]
+    def solr_master_ip
+      search_string = config['replica']['solr_master']
+      ip_attr = config['replica']['master_ip_attribute']
+      search('node', search_string).first[ip_attr] # ~FC003
     end
   end
 end
