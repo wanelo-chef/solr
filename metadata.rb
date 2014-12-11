@@ -1,3 +1,4 @@
+name 'solr'
 maintainer 'Wanelo, Inc.'
 maintainer_email 'dev@wanelo.com'
 license 'Apache 2.0'

@@ -16,37 +16,37 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-node.set[:solr][:service_name] = 'solr-master'
+node.set['solr']['service_name'] = 'solr-master'
 
 include_recipe 'solr::user'
 include_recipe 'solr::install'
 include_recipe 'solr::install_newrelic'
 
-auto_commit_enabled = node[:solr][:config][:auto_commit][:max_docs] && node[:solr][:config][:auto_commit][:max_time]
+auto_commit_enabled = node['solr']['config']['auto_commit']['max_docs'] && node['solr']['config']['auto_commit']['max_time']
 
 # configure solr
 execute 'copy example solr home into master' do
-  command "rsync -a /opt/solr/home_example/ #{node[:solr][:master][:home]}/ && chown -R solr:root #{node[:solr][:master][:home]}/"
-  not_if "svcs #{node[:solr][:service_name]}"
+  command "rsync -a /opt/solr/home_example/ #{node['solr']['master']['home']}/ " \
+          "&& chown -R solr'root' #{node['solr']['master']['home']}/"
+  not_if "svcs #{node['solr']['service_name']}"
 end
 
-template "#{node[:solr][:master][:home]}/log.conf" do
+template "#{node['solr']['master']['home']}/log.conf" do
   source 'solr-master-log.conf.erb'
-  owner node[:solr][:solr_user]
+  owner node['solr']['solr_user']
   mode '0700'
-  notifies :restart, "service[#{node[:solr][:service_name]}]"
+  notifies 'restart', "service[#{node['solr']['service_name']}]"
 end
 
-template "#{node[:solr][:master][:home]}/solr/conf/solrconfig.xml" do
-  owner node[:solr][:solr_user]
+template "#{node['solr']['master']['home']}/solr/conf/solrconfig.xml" do
   mode '0600'
   variables(
     role: 'master',
-    config: node[:solr][:config],
-    master: node[:solr][:master],
+    config: node['solr']['config'],
+    master: node['solr']['master'],
     auto_commit: auto_commit_enabled
   )
-  only_if { node[:solr][:uses_default_config] || !::File.exist?("#{node[:solr][:replica][:home]}/solr/conf/solrconfig.xml") }
+  only_if { node['solr']['uses_default_config'] || !::File.exist?("#{node['solr']['replica']['home']}/solr/conf/solrconfig.xml") }
 end
 
 # create/import smf manifest

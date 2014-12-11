@@ -16,21 +16,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include_recipe 'ipaddr_extensions::default'
-include_recipe 'smf::default'
+include_recipe 'ipaddr_extensions'
+include_recipe 'smf'
 
 # create/import smf manifest
-smf node[:solr][:service_name] do
-  credentials_user node[:solr][:solr_user]
+smf node['solr']['service_name'] do
+  credentials_user node['solr']['solr_user']
   start_command Solr::ServiceHelper.new(node).start_command
   start_timeout 300
   stop_timeout 60
-  environment 'PATH' => node[:solr][:smf_path],
+  environment 'PATH' => node['solr']['smf_path'],
               'LC_ALL' => 'en_US.UTF-8',
               'LANG' => 'en_US.UTF-8'
 end
 
 # start solr service
-service node[:solr][:service_name] do
-  action :enable
+service node['solr']['service_name'] do
+  action 'enable'
 end

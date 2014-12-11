@@ -21,10 +21,10 @@ include_recipe 'solr::user'
 
 # download and extract solr
 
-solr_tarball = "#{Chef::Config[:file_cache_path]}/solr.tgz"
+solr_tarball = "#{Chef::Config['file_cache_path']}/solr.tgz"
 
 remote_file solr_tarball do
-  source node[:solr][:source_url]
+  source node['solr']['source_url']
   mode '0744'
   not_if "ls #{solr_tarball}"
 end
@@ -34,21 +34,21 @@ execute 'extract solr archive' do
   not_if 'ls -d /var/tmp/solr'
 end
 
-directory node[:solr][:solr_home] do
-  owner node[:solr][:solr_user]
+directory node['solr']['solr_home'] do
+  owner node['solr']['solr_user']
 end
 
 execute 'copy example solr home into master' do
-  command "mkdir -p #{node[:solr][:solr_home]}/home_example/ " \
-          "&& cp -pr /var/tmp/solr/example/* #{node[:solr][:solr_home]}/home_example/"
-  not_if "svcs #{node[:solr][:service_name]}"
+  command "mkdir -p #{node['solr']['solr_home']}/home_example/ " \
+          "&& cp -pr /var/tmp/solr/example/* #{node['solr']['solr_home']}/home_example/"
+  not_if "svcs #{node['solr']['service_name']}"
 end
 
-directory "#{node[:solr][:solr_home]}/home_example/solr/data" do
+directory "#{node['solr']['solr_home']}/home_example/solr/data" do
   recursive true
-  owner node[:solr][:solr_user]
+  owner node['solr']['solr_user']
 end
 
-directory node[:solr][:solr_log_dir] do
-  owner node[:solr][:solr_user]
+directory node['solr']['solr_log_dir'] do
+  owner node['solr']['solr_user']
 end

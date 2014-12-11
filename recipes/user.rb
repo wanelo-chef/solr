@@ -16,8 +16,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-user node[:solr][:solr_user] do
-  home node[:solr][:solr_home]
+user node['solr']['solr_user'] do
+  home node['solr']['solr_home']
   shell '/bin/bash'
   supports manage_home: false
 end

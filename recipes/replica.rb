@@ -16,7 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-node.set[:solr][:service_name] = 'solr-replica'
+node.set['solr']['service_name'] = 'solr-replica'
 
 include_recipe 'solr::user'
 include_recipe 'solr::install'
@@ -24,27 +24,27 @@ include_recipe 'solr::install_newrelic'
 
 # configure solr
 execute 'copy example solr home into master' do
-  command "rsync -a /opt/solr/home_example/ #{node[:solr][:replica][:home]}/ " \
-          "&& chown -R #{node[:solr][:solr_user]}:root #{node[:solr][:replica][:home]}/"
-  not_if "svcs #{node[:solr][:service_name]}"
+  command "rsync -a /opt/solr/home_example/ #{node['solr']['replica']['home']}/ " \
+          "&& chown -R #{node['solr']['solr_user']}'root' #{node['solr']['replica']['home']}/"
+  not_if "svcs #{node['solr']['service_name']}"
 end
 
-template "#{node[:solr][:replica][:home]}/log.conf" do
+template "#{node['solr']['replica']['home']}/log.conf" do
   source 'solr-replica-log.conf.erb'
-  owner node[:solr][:solr_user]
+  owner node['solr']['solr_user']
   mode '0700'
-  notifies :restart, "service[#{node[:solr][:service_name]}]"
+  notifies 'restart', "service[#{node['solr']['service_name']}]"
 end
 
-template "#{node[:solr][:replica][:home]}/solr/conf/solrconfig.xml" do
-  owner node[:solr][:solr_user]
+template "#{node['solr']['replica']['home']}/solr/conf/solrconfig.xml" do
+  owner node['solr']['solr_user']
   mode '0600'
   variables(
     role: 'replica',
-    config: node[:solr][:config],
-    master: node[:solr][:master]
+    config: node['solr']['config'],
+    master: node['solr']['master']
   )
-  only_if { node[:solr][:uses_default_config] || !::File.exist?("#{node[:solr][:replica][:home]}/solr/conf/solrconfig.xml") }
+  only_if { node['solr']['uses_default_config'] || !::File.exist?("#{node['solr']['replica']['home']}/solr/conf/solrconfig.xml") }
 end
 
 # create/import smf manifest
