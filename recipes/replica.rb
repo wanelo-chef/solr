@@ -24,7 +24,8 @@ include_recipe 'solr::install_newrelic'
 
 # configure solr
 execute 'copy example solr home into master' do
-  command "rsync -a /opt/solr/home_example/ #{node[:solr][:replica][:home]}/ && chown -R #{node[:solr][:solr_user]}:root #{node[:solr][:replica][:home]}/"
+  command "rsync -a /opt/solr/home_example/ #{node[:solr][:replica][:home]}/ " \
+          "&& chown -R #{node[:solr][:solr_user]}:root #{node[:solr][:replica][:home]}/"
   not_if "svcs #{node[:solr][:service_name]}"
 end
 

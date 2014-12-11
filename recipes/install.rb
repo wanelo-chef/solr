@@ -39,7 +39,8 @@ directory node[:solr][:solr_home] do
 end
 
 execute 'copy example solr home into master' do
-  command "mkdir -p #{node[:solr][:solr_home]}/home_example/ && cp -pr /var/tmp/solr/example/* #{node[:solr][:solr_home]}/home_example/"
+  command "mkdir -p #{node[:solr][:solr_home]}/home_example/ " \
+          "&& cp -pr /var/tmp/solr/example/* #{node[:solr][:solr_home]}/home_example/"
   not_if "svcs #{node[:solr][:service_name]}"
 end
 

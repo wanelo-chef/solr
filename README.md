@@ -30,3 +30,6 @@ This will create a service in SMF named `solr-replica` on port 8983. By default 
 a master on localhost. This can be configured by updating the `solr.master.hostname` attribute on
 a host.
 
+## Attribution
+
+Based on work originally found in the ModCloth solr cookbook.

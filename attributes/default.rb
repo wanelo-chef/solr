@@ -31,7 +31,8 @@ default[:solr][:newrelic][:environment] = 'demo'
 default[:solr][:newrelic][:api_key] = ''
 default[:solr][:newrelic][:app_name] = 'Solr application'
 default[:solr][:newrelic][:jar] = '/opt/solr/newrelic/newrelic.jar'
-default[:solr][:newrelic][:jar_checksum] = nil     # calculate with `openssl dgst -sha256 $filename`
+# calculate with `openssl dgst -sha256 $filename`
+default[:solr][:newrelic][:jar_checksum] = nil
 default[:solr][:newrelic][:remote_jar_file] = ''
 
 default[:solr][:memory][:xmx] = ''
@@ -40,7 +41,8 @@ default[:solr][:memory][:xms] = ''
 default[:solr][:jvm_flags] = ''
 
 default[:solr][:version] = '3.6.2'
-default[:solr][:source_url] = "http://www.us.apache.org/dist/lucene/solr/#{node[:solr][:version]}/apache-solr-#{node[:solr][:version]}.tgz"
+default[:solr][:source_url] = 'http://www.us.apache.org/dist/lucene/solr/' \
+  "#{node[:solr][:version]}/apache-solr-#{node[:solr][:version]}.tgz"
 
 default[:solr][:config][:auto_commit][:max_docs] = nil
 default[:solr][:config][:auto_commit][:max_time] = nil
