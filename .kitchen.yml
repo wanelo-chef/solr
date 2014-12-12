@@ -21,6 +21,15 @@ suites:
     run_list:
       - recipe[test-setup::java]
       - recipe[solr::master]
+  - name: replica
+    attributes:
+      solr:
+        replica:
+          solr_master: roles:solr-master
+          master_ip_attribute: privateaddress
+    run_list:
+      - recipe[test-setup::java]
+      - recipe[solr::replica]
   - name: solr3
     attributes:
       solr:
