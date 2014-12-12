@@ -17,17 +17,22 @@
 # limitations under the License.
 
 include_recipe 'ipaddr_extensions'
+include_recipe 'partial_search_in_env'
 include_recipe 'smf'
+
+helper = Solr::ServiceHelper.new(node)
+path = [node['solr']['smf_path'], node['paths']['bin_path']].compact.join(':')
 
 # create/import smf manifest
 smf node['solr']['service_name'] do
-  credentials_user node['solr']['solr_user']
-  start_command Solr::ServiceHelper.new(node).start_command
+  user node['solr']['solr_user']
+  start_command helper.start_command
   start_timeout 300
   stop_timeout 60
-  environment 'PATH' => node['solr']['smf_path'],
+  environment 'PATH' => path,
               'LC_ALL' => 'en_US.UTF-8',
               'LANG' => 'en_US.UTF-8'
+  working_directory helper.working_directory
 end
 
 # start solr service

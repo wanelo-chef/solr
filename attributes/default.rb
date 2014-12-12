@@ -1,14 +1,12 @@
-default['solr']['java_dir'] = '/usr/java/default'
-default['solr']['java_options'] = '-Dsolr.solr.home=/opt/solr/solr $JAVA_OPTIONS'
 default['solr']['java_executable'] = 'java'
+
 default['solr']['solr_home'] = '/opt/solr'
 default['solr']['solr_user'] = 'solr'
 default['solr']['solr_log_dir'] = '/var/log/solr'
 default['solr']['solr_log_size'] = 1_000_000_000
 default['solr']['solr_log_count'] = 4
 
-default['solr']['smf_path'] = '/opt/local/bin:/opt/local/sbin:/usr/bin:/usr/sbin'
-default['solr']['uses_sunspot_schema'] = true
+default['solr']['smf_path'] = nil
 default['solr']['uses_default_config'] = true
 
 default['solr']['only_bind_private_ip'] = false
@@ -35,14 +33,14 @@ default['solr']['newrelic']['jar'] = '/opt/solr/newrelic/newrelic.jar'
 default['solr']['newrelic']['jar_checksum'] = nil
 default['solr']['newrelic']['remote_jar_file'] = ''
 
-default['solr']['memory']['xmx'] = ''
-default['solr']['memory']['xms'] = ''
+default['solr']['memory']['xmx'] = nil
+default['solr']['memory']['xms'] = nil
 
-default['solr']['jvm_flags'] = ''
+default['solr']['jvm_flags'] = nil
 
-default['solr']['version'] = '3.6.2'
-default['solr']['source_url'] = 'http://www.us.apache.org/dist/lucene/solr/' \
-  "#{node['solr']['version']}/apache-solr-#{node['solr']['version']}.tgz"
+default['solr']['version'] = '4.10.2'
+default['solr']['source_url'] = 'http://mirrors.gigenet.com/apache/lucene/solr/' \
+  "#{node['solr']['version']}/solr-#{node['solr']['version']}.tgz"
 
 default['solr']['config']['auto_commit']['max_docs'] = nil
 default['solr']['config']['auto_commit']['max_time'] = nil

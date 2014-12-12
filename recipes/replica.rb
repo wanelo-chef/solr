@@ -22,29 +22,39 @@ include_recipe 'solr::user'
 include_recipe 'solr::install'
 include_recipe 'solr::install_newrelic'
 
+user = node['solr']['solr_user']
+helper = Solr::InstallationHelper.new(node, false)
+solr_home = helper.solr_home
+
 # configure solr
-execute 'copy example solr home into master' do
-  command "rsync -a /opt/solr/home_example/ #{node['solr']['replica']['home']}/ " \
-          "&& chown -R #{node['solr']['solr_user']}'root' #{node['solr']['replica']['home']}/"
-  not_if "svcs #{node['solr']['service_name']}"
+execute 'copy example solr home into replica' do
+  command "rsync -a #{helper.example_directory}/ #{solr_home}/ " \
+          "&& chown -R #{user}:root #{solr_home}/"
+  not_if { ::File.directory?(solr_home) }
 end
 
-template "#{node['solr']['replica']['home']}/log.conf" do
-  source 'solr-replica-log.conf.erb'
-  owner node['solr']['solr_user']
-  mode '0700'
-  notifies 'restart', "service[#{node['solr']['service_name']}]"
+directory ::File.join(solr_home, 'solr-webapp') do
+  owner user
 end
 
-template "#{node['solr']['replica']['home']}/solr/conf/solrconfig.xml" do
-  owner node['solr']['solr_user']
+template helper.log_config do
+  source helper.log_config_source
+  owner user
+  mode '0644'
+  variables 'logname' => node['solr']['service_name']
+  notifies :restart, "service[#{node['solr']['service_name']}]"
+end
+
+template helper.solr_config do
+  source helper.solr_config_source
   mode '0600'
   variables(
     role: 'replica',
     config: node['solr']['config'],
-    master: node['solr']['master']
+    master: node['solr']['master'],
+    auto_commit: helper.auto_commit_enabled?
   )
-  only_if { node['solr']['uses_default_config'] || !::File.exist?("#{node['solr']['replica']['home']}/solr/conf/solrconfig.xml") }
+  only_if { helper.use_cookbook_config? }
 end
 
 # create/import smf manifest

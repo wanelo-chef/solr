@@ -1,0 +1,34 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+  require_chef_omnibus: true
+
+platforms:
+- name: smartos
+  driver_config:
+    box: livinginthepast/smartos-base64
+    vagrantfile_erb: test/templates/Vagrantfile.smartos.erb
+  provisioner:
+    name: chef_zero
+    sudo: true
+    chef_omnibus_url: https://raw.github.com/wanelo-chef/chef-bootstrap/master/latest.sh
+
+suites:
+  - name: master
+    run_list:
+      - recipe[test-setup::java]
+      - recipe[solr::master]
+  - name: solr3
+    attributes:
+      solr:
+        version: 3.6.2
+        source_url: https://us-east.manta.joyent.com/wanelo/public/cache/solr/apache-solr-3.6.2.tgz
+    run_list:
+      - recipe[test-setup::java]
+      - recipe[solr::master]
+  - name: provider-default
+    run_list:
+      - recipe[test-setup::default_provider]

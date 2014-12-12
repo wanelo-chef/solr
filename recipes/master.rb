@@ -22,31 +22,35 @@ include_recipe 'solr::user'
 include_recipe 'solr::install'
 include_recipe 'solr::install_newrelic'
 
-auto_commit_enabled = node['solr']['config']['auto_commit']['max_docs'] && node['solr']['config']['auto_commit']['max_time']
+user = node['solr']['solr_user']
+helper = Solr::InstallationHelper.new(node, true)
+solr_home = helper.solr_home
 
 # configure solr
 execute 'copy example solr home into master' do
-  command "rsync -a /opt/solr/home_example/ #{node['solr']['master']['home']}/ " \
-          "&& chown -R solr'root' #{node['solr']['master']['home']}/"
-  not_if "svcs #{node['solr']['service_name']}"
+  command "rsync -a #{helper.example_directory}/ #{solr_home}/ " \
+          "&& chown -R #{user}:root #{solr_home}/"
+  not_if { ::File.directory?(solr_home) }
 end
 
-template "#{node['solr']['master']['home']}/log.conf" do
-  source 'solr-master-log.conf.erb'
-  owner node['solr']['solr_user']
-  mode '0700'
-  notifies 'restart', "service[#{node['solr']['service_name']}]"
+template helper.log_config do
+  source helper.log_config_source
+  owner user
+  mode '0644'
+  variables 'logname' => node['solr']['service_name']
+  notifies :restart, "service[#{node['solr']['service_name']}]"
 end
 
-template "#{node['solr']['master']['home']}/solr/conf/solrconfig.xml" do
+template helper.solr_config do
+  source helper.solr_config_source
   mode '0600'
   variables(
     role: 'master',
     config: node['solr']['config'],
     master: node['solr']['master'],
-    auto_commit: auto_commit_enabled
+    auto_commit: helper.auto_commit_enabled?
   )
-  only_if { node['solr']['uses_default_config'] || !::File.exist?("#{node['solr']['replica']['home']}/solr/conf/solrconfig.xml") }
+  only_if { helper.use_cookbook_config? }
 end
 
 # create/import smf manifest
