@@ -59,8 +59,8 @@ module Solr
 
     def newrelic_flags
       return nil if config['newrelic']['api_key'].to_s.empty?
-      "-javaagent:#{config[:newrelic][:jar]} " \
-      "-Dnewrelic.environment=#{config[:newrelic][:environment]}"
+      "-javaagent:#{config['newrelic']['jar']} " \
+      "-Dnewrelic.environment=#{config['newrelic']['environment']}"
     end
 
     def replica_flags
@@ -88,7 +88,8 @@ module Solr
     def solr_master_ip
       search_string = config['replica']['solr_master']
       ip_attr = config['replica']['master_ip_attribute']
-      partial_search_in_env('node', search_string, keys: { 'address' => [ip_attr] }).first['address'] # ~FC003
+      hosts = partial_search_in_env('node', search_string, keys: { 'address' => [ip_attr] }) # ~FC003
+      hosts.first['address']
     end
   end
 end

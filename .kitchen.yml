@@ -13,8 +13,12 @@ platforms:
     vagrantfile_erb: test/templates/Vagrantfile.smartos.erb
   provisioner:
     name: chef_zero
+    nodes_path: test/nodes
+    environments_path: test/environments
     sudo: true
     chef_omnibus_url: https://raw.github.com/wanelo-chef/chef-bootstrap/master/latest.sh
+    client_rb:
+        environment: my-environment
 
 suites:
   - name: master
