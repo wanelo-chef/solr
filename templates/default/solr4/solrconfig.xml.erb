@@ -636,11 +636,11 @@
         requests in that range can be satisfied via the cache.
      -->
 
-   <queryResultWindowSize><%= @config[:query_result_window_size] %></queryResultWindowSize>
+   <queryResultWindowSize><%= @config['query_result_window_size'] %></queryResultWindowSize>
 
     <!-- Maximum number of documents to cache for any entry in the
          queryResultCache. -->
-    <queryResultMaxDocsCached><%= @config[:query_result_max_docs_cached] %></queryResultMaxDocsCached>
+    <queryResultMaxDocsCached><%= @config['query_result_max_docs_cached'] %></queryResultMaxDocsCached>
 
    <!-- Query Related Event Listeners
 
@@ -1220,15 +1220,15 @@
     -->
 
   <requestHandler name="/replication" class="solr.ReplicationHandler">
-    <% if @role == "master" %>
+    <% if @role == 'master' %>
       <lst name="master">
         <str name="replicateAfter">commit</str>
         <str name="replicateAfter">startup</str>
-        <str name="confFiles"><%= @master["replicated_configs"].join(",") %></str>
+        <str name="confFiles"><%= @master['replicated_configs'].join(',') %></str>
       </lst>
-    <% elsif @role == "replica" %>
+    <% elsif @role == 'replica' %>
       <lst name="slave">
-        <str name="masterUrl">${replication.url:http://<%= @master["hostname"] %>:<%= @master["port"] %>/solr/replication}</str>
+        <str name="masterUrl">${replication.url:http://<%= @master['hostname'] %>:<%= @master['port'] %>/solr/replication}</str>
         <str name="pollInterval">00:00:60</str>
       </lst>
     <% end %>
