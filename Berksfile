@@ -2,7 +2,7 @@ source 'https://supermarket.getchef.com'
 
 metadata
 
-cookbook 'partial_search_in_env', git: 'https://github.com/wanelo-chef/partial_search_in_env.git'
+cookbook 'partial_search_in_env', git: 'https://github.com/wanelo-chef/partial-search-in-env.git'
 cookbook 'paths', git: 'https://github.com/bixu/paths.git'
 
 group :integration do
