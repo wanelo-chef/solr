@@ -537,11 +537,13 @@
          (DocList) based on a query, a sort, and the range of documents requested.
       -->
 
-    <queryResultCache
-      class="<%= @config[:query_result_cache][:class] %>"
-      size="<%= @config[:query_result_cache][:size] %>"
-      initialSize="<%= @config[:query_result_cache][:initial_size] %>"
-      autowarmCount="<%= @config[:query_result_cache][:auto_warm_count] %>"/>
+    <% if @config[:query_result_cache][:enabled] %>
+      <queryResultCache
+        class="<%= @config[:query_result_cache][:class] %>"
+        size="<%= @config[:query_result_cache][:size] %>"
+        initialSize="<%= @config[:query_result_cache][:initial_size] %>"
+        autowarmCount="<%= @config[:query_result_cache][:auto_warm_count] %>"/>
+    <% end %>
 
     <!-- Document Cache
 
