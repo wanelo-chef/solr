@@ -25,7 +25,7 @@ module Solr
       case major_version
       when 3
         ::File.join(solr_home, 'log.conf')
-      when 4
+      when 4, 5
         ::File.join(solr_home, 'resources', 'log4j.properties')
       end
     end

@@ -1,4 +1,12 @@
+include_recipe 'test-setup::java'
 include_recipe 'test-setup::_node'
 
-solr 'master' do
+solr 'solr' do
+  version '5.4.0'
+  solr_home '/var/solr/solr5'
+  port 8985
+  heap_size '1g'
+  java_home '/opt/local/java/openjdk7'
+  jvm_params '-Xdebug'
 end
+

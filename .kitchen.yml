@@ -11,6 +11,11 @@ platforms:
   driver_config:
     box: livinginthepast/smartos-base64
     vagrantfile_erb: test/templates/Vagrantfile.smartos.erb
+    zone:
+      platform_image: 'latest'
+      name: base64
+      brand: joyent
+      image: 5c7d0d24-3475-11e5-8e67-27953a8b237e
   provisioner:
     name: chef_zero
     nodes_path: test/nodes

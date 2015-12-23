@@ -38,8 +38,9 @@ default['solr']['memory']['xms'] = nil
 
 default['solr']['jvm_flags'] = nil
 
-default['solr']['version'] = '4.10.2'
-default['solr']['source_url'] = 'http://mirrors.gigenet.com/apache/lucene/solr/' \
+default['solr']['version'] = '4.10.4'
+default['solr']['mirror'] = 'http://ftp.wayne.edu/apache/lucene/solr'
+default['solr']['source_url'] = "#{node['solr']['mirror']}" \
   "#{node['solr']['version']}/solr-#{node['solr']['version']}.tgz"
 
 default['solr']['config']['auto_commit']['max_docs'] = nil
