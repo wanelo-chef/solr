@@ -13,7 +13,7 @@ Vagrant.configure("2") do |c|
   c.zone.name = '<%= config[:zone][:name] %>'
   c.zone.brand = '<%= config[:zone][:brand] || 'joyent' %>'
   c.zone.image = '<%= config[:zone][:image] %>'
-  c.zone.memory = 1536
+  c.zone.memory = <%= config[:zone][:memory] || 3072 %>
   c.zone.disk_size = 5
   <% end %>
   <% if config[:vm_hostname] %>

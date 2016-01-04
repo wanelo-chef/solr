@@ -8,5 +8,6 @@ solr 'solr' do
   heap_size '1g'
   java_home '/opt/local/java/openjdk7'
   jvm_params '-Xdebug'
+  notifies :enable, 'solr[solr]'
 end
 

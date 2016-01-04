@@ -17,7 +17,7 @@ class Chef
         @resource_name = :solr
         @provider = Chef::Provider::Solr
         @action = :install
-        @allowed_actions = [:install]
+        @allowed_actions = [:install, :enable, :restart]
       end
 
       ## Attributes
@@ -96,7 +96,7 @@ class Chef
       end
 
       def start_command
-        'bin/solr start -h %{config/hostname} -p %{config/port} -s %{config/solr_home}'
+        'bin/solr start -h %{config/hostname} -p %{config/port} -s %{config/solr_home} -a "%{config/jvm_params}"'
       end
 
       def stop_command
