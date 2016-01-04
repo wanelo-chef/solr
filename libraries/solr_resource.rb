@@ -15,7 +15,6 @@ class Chef
       def initialize(name, run_context = nil)
         super
         @resource_name = :solr
-        @provider = Chef::Provider::Solr
         @action = :install
         @allowed_actions = [:install, :enable, :restart]
       end
@@ -81,6 +80,10 @@ class Chef
 
       def major_version
         version.split('.').first.to_i
+      end
+
+      def provider
+        Chef::Provider::Solr
       end
 
       def remote_tar_file
