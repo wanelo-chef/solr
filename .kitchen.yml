@@ -50,3 +50,6 @@ suites:
   - name: provider-default
     run_list:
       - recipe[test-setup::default_provider]
+  - name: provider-core
+    run_list:
+      - recipe[test-setup::core_provider]
