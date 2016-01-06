@@ -978,11 +978,9 @@
 
 
   <requestHandler name="/replication" class="solr.ReplicationHandler">
-    <lst name="master">
-      <str name="replicateAfter">startup</str>
-      <str name="replicateAfter">commit</str>
-      <str name="confFiles">stopwords.txt,synonyms.txt</str>
-      <str name="commitReserveDuration">00:00:10</str>
+    <lst name="slave">
+      <str name="masterUrl">http://<%= @master %>/solr/<%= @core %>/replication</str>
+      <str name="pollInterval">00:00:60</str>
     </lst>
   </requestHandler>
 

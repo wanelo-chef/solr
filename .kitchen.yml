@@ -53,3 +53,6 @@ suites:
   - name: provider-core
     run_list:
       - recipe[test-setup::core_provider]
+  - name: provider-core-replication
+    run_list:
+      - recipe[test-setup::core_provider_replication]
