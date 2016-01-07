@@ -16,6 +16,7 @@ class Chef
       end
 
       def action_create
+        install_dependencies
         new_resource.updated_by_last_action(true)
         new_resource.notifies(:install, new_resource, :delayed)
       end
@@ -53,6 +54,10 @@ class Chef
         return if new_resource.already_exists?
         shell_out!(new_resource.create_command, user: 'solr')
         new_resource.updated_by_last_action(true)
+      end
+
+      def install_dependencies
+        package 'unzip'
       end
     end
   end
