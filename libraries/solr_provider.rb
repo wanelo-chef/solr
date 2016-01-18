@@ -94,7 +94,8 @@ class Chef
           cookbook 'solr'
           owner 'root'
           mode 0644
-          variables 'heap_size' => new_resource.heap_size
+          variables 'heap_size' => new_resource.heap_size,
+                    'solr_home' => new_resource.solr_home
         end
         action.run_action(:create)
         included_resources << action
