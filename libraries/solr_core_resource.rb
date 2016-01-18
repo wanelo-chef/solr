@@ -54,7 +54,7 @@ class Chef
       ## Helpers
 
       def already_exists?
-        !(shell_out('test -d %s/core.properties' % core_directory).error?)
+        !(shell_out('test -f %s/core.properties' % core_directory).error?)
       end
 
       def core_directory

@@ -52,6 +52,7 @@ class Chef
 
       def create_core
         return if new_resource.already_exists?
+        Chef::Log.info 'Calling Solr API to create solr core'
         shell_out!(new_resource.create_command, user: 'solr')
         new_resource.updated_by_last_action(true)
       end
