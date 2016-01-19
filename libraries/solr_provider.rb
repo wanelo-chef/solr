@@ -60,11 +60,7 @@ class Chef
           stop_command new_resource.stop_command
           start_timeout 300
           stop_timeout 60
-          environment 'PATH' => node['paths']['bin_path'],
-            'JAVA_HOME' => new_resource.java_home,
-            'LC_ALL' => 'en_US.UTF-8',
-            'LANG' => 'en_US.UTF-8',
-            'SOLR_INCLUDE' => new_resource.solr_include
+          environment new_resource.service_environment
           property_groups({
               'config' => {
                 'hostname' => new_resource.hostname,

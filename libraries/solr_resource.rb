@@ -9,6 +9,7 @@ class Chef
     #   hostname 'solr.prod'
     #   heap_size '1g'
     #   jvm_params '-Xdebug'
+    #   newrelic_jar '/var/solr/solr5/newrelic/newrelic.jar'
     # end
     #
     class Solr < Chef::Resource
@@ -53,6 +54,10 @@ class Chef
         set_or_return(:jvm_params, arg, kind_of: String)
       end
 
+      def newrelic_jar(arg = nil)
+        set_or_return(:newrelic_jar, arg, kind_of: String)
+      end
+
       ## Helpers
 
       def install_dir
@@ -92,6 +97,18 @@ class Chef
           version,
           version
         ]
+      end
+
+      def service_environment
+        {
+          'PATH' => node['paths']['bin_path'],
+          'JAVA_HOME' => java_home,
+          'LC_ALL' => 'en_US.UTF-8',
+          'LANG' => 'en_US.UTF-8',
+          'SOLR_INCLUDE' => solr_include
+        }.tap do |environment|
+          environment['SOLR_OPTS'] = "-javaagent:#{newrelic_jar}" if newrelic_jar
+        end
       end
 
       def solr_include
