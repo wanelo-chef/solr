@@ -39,7 +39,7 @@ default['solr']['memory']['xms'] = nil
 default['solr']['jvm_flags'] = nil
 
 default['solr']['version'] = '4.10.4'
-default['solr']['mirror'] = 'http://ftp.wayne.edu/apache/lucene/solr'
+default['solr']['mirror'] = 'http://archive.apache.org/dist/lucene/solr/'
 default['solr']['source_url'] = "#{node['solr']['mirror']}" \
   "#{node['solr']['version']}/solr-#{node['solr']['version']}.tgz"
 
